@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
-      apiBase: 'https://qrcodism.onrender.com'
+      apiBase: 'https://qr-7pwc.onrender.com'
     }
   }
 })
