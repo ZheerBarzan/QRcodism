@@ -52,10 +52,10 @@ const downloadCode = () => {
 </script>
 
 <template>
-  <div class="container">
-    <h1>QR Generator (Nuxt)</h1>
-
-    <div class="tabs">
+  <div class="main-wrapper">
+    <div class="container">
+      <h1>QRcodism</h1>
+      <div class="tabs">
       <button :class="{ active: mode === 'link' }" @click="mode = 'link'">🔗 Link</button>
       <button :class="{ active: mode === 'wifi' }" @click="mode = 'wifi'">📶 Wi-Fi</button>
     </div>
@@ -67,7 +67,7 @@ const downloadCode = () => {
 
     <div v-if="mode === 'wifi'" class="card">
       <label>Network Name (SSID)</label>
-      <input v-model="wifiSSID" placeholder="MyHomeWifi" />
+      <input v-model="wifiSSID" placeholder="Wifi Name" />
       
       <label>Password</label>
       <input v-model="wifiPassword" type="text" placeholder="SecretPassword123" />
@@ -92,25 +92,48 @@ const downloadCode = () => {
       </button>
     </div>
   </div>
+  </div>
 </template>
 
 <style scoped>
-/* Simple CSS for a clean look */
-.container { max-width: 450px; margin: 4rem auto; font-family: 'Segoe UI', sans-serif; text-align: center; color: #333; }
-.tabs { margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; }
-.tabs button { padding: 10px 20px; border: none; background: #eee; cursor: pointer; border-radius: 8px; font-weight: 600; }
+/* Simple CSS for a clean, centered card */
+.main-wrapper { background: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem 1rem; }
+.container { max-width: 720px; width: 100%; background: white; border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); padding: 3rem; font-family: 'Segoe UI', sans-serif; text-align: center; color: #333; display: flex; flex-direction: column; gap: 1rem; box-sizing: border-box; }
+.tabs { margin-bottom: 24px; display: flex; justify-content: center; gap: 14px; }
+.tabs button { padding: 12px 22px; border: none; background: #eee; cursor: pointer; border-radius: 8px; font-weight: 600; }
 .tabs button.active { background: #00dc82; color: white; } /* Nuxt Green */
 
-.card { background: #f9f9f9; padding: 20px; border-radius: 12px; text-align: left; margin-bottom: 15px; }
-.card label { display: block; font-size: 0.9rem; margin-bottom: 5px; color: #666; }
-input, select { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+.card { background: #f9f9f9; padding: 24px; border-radius: 12px; text-align: left; margin-bottom: 18px; }
+.card label { display: block; font-size: 0.95rem; margin-bottom: 8px; color: #666; }
+input, select { width: 100%; padding: 12px; margin-bottom: 16px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
 
-.generate-btn { width: 100%; padding: 12px; background: #333; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; }
+.generate-btn { width: 100%; padding: 14px; background: #333; color: white; border: none; border-radius: 10px; font-size: 1.05rem; cursor: pointer; transition: 0.18s; }
 .generate-btn:hover { background: #000; }
 
 .result-area { margin-top: 30px; animation: fadeIn 0.5s; }
-.qr-preview { max-width: 200px; border: 1px solid #ddd; border-radius: 8px; }
-.download-btn { margin-top: 15px; padding: 8px 16px; background: #00dc82; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.qr-preview { max-width: 260px; border: 1px solid #ddd; border-radius: 10px; }
+.download-btn { margin-top: 15px; padding: 10px 18px; background: #00dc82; color: white; border: none; border-radius: 8px; cursor: pointer; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .main-wrapper { padding: 1.25rem; }
+  .container { max-width: 95%; padding: 1.25rem; border-radius: 12px; }
+  .tabs { gap: 8px; margin-bottom: 18px; }
+  .tabs button { padding: 8px 12px; font-size: 0.95rem; }
+  .card { padding: 16px; }
+  .card label { font-size: 0.9rem; }
+  input, select { padding: 10px; margin-bottom: 12px; }
+  .generate-btn { padding: 12px; font-size: 1rem; border-radius: 8px; }
+  .qr-preview { max-width: 180px; }
+}
+
+@media (max-width: 380px) {
+  .container { padding: 1rem; }
+  h1 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .tabs { flex-wrap: wrap; gap: 6px; }
+  .qr-preview { max-width: 160px; }
+}
+
 </style>
