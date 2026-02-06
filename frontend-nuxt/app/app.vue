@@ -7,6 +7,9 @@ const wifiSSID = ref('')
 const wifiPassword = ref('')
 const qrImage = ref(null)
 const format = ref('png') // Let's add the option for SVG or PNG
+const config = useRuntimeConfig()
+const backendUrl = config.public.apiBase
+
 
 const generateCode = async () => {
   const formData = new FormData()
@@ -24,7 +27,7 @@ const generateCode = async () => {
 
   try {
     // 2. Send Request using Nuxt's native $fetch
-    const response = await $fetch('http://127.0.0.1:8000/api/generate/', {
+    const response = await $fetch(`${backendUrl}/api/generate/`, {
       method: 'POST',
       body: formData,
       responseType: 'blob' // Crucial: tells Nuxt to treat response as a file
