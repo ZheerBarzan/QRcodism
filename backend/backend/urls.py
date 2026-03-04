@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import generate_qr
+from core.views import generate_qr, health
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/generate/', generate_qr),
+    path('api/health/', health),
 ]

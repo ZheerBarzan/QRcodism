@@ -48,3 +48,7 @@ def generate_qr(request):
         return HttpResponse(buffer, content_type=content_type)
 
     return HttpResponse("Invalid request method", status=405)
+
+
+def health(request):
+    return HttpResponse("ok", status=200)
