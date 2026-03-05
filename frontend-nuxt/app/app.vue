@@ -1,5 +1,5 @@
 <script setup>
-// No imports needed for ref in Nuxt (auto-imported)
+import QRCode from 'qrcode'
 
 const mode = ref('link') // 'link' or 'wifi'
 const linkUrl = ref('')
@@ -7,39 +7,23 @@ const wifiSSID = ref('')
 const wifiPassword = ref('')
 const qrImage = ref(null)
 const format = ref('png') // Let's add the option for SVG or PNG
-const config = useRuntimeConfig()
-const backendUrl = config.public.apiBase
-
 
 const generateCode = async () => {
-  const formData = new FormData()
-  
-  // 1. Prepare Data
-  formData.append('mode', mode.value)
-  formData.append('format', format.value) // We will send this to backend
-  
-  if (mode.value === 'link') {
-    formData.append('data', linkUrl.value)
-  } else {
-    formData.append('ssid', wifiSSID.value)
-    formData.append('password', wifiPassword.value)
+  if (mode.value === 'wifi') {
+    alert("Wi-Fi mode isn't supported yet.")
+    return
   }
 
   try {
-    // 2. Send Request using Nuxt's native $fetch
-    const response = await $fetch(`${backendUrl}/api/generate/`, {
-      method: 'POST',
-      body: formData,
-      responseType: 'blob' // Crucial: tells Nuxt to treat response as a file
-    })
-
-    // 3. Convert Blob to Displayable URL
-    if (qrImage.value) URL.revokeObjectURL(qrImage.value) // Cleanup old image
-    qrImage.value = URL.createObjectURL(response)
-    
+    if (format.value === 'svg') {
+      const svgString = await QRCode.toString(linkUrl.value, { type: 'svg' })
+      qrImage.value = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`
+    } else {
+      qrImage.value = await QRCode.toDataURL(linkUrl.value, { type: 'image/png' })
+    }
   } catch (error) {
     console.error("Error generating QR:", error)
-    alert("Failed to connect to Django server.")
+    alert("Failed to generate QR code.")
   }
 }
 
